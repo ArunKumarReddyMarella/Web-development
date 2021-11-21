@@ -1,0 +1,77 @@
+#timer {
+    background-color: whitesmoke;
+    border: 5px solid grey;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+}
+
+#main {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: whitesmoke;
+    border: 5px solid #FFFF00;
+    padding: 10px;
+    width: 20%;
+}
+
+.button {
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+#sessiontime {
+    text-align: center;
+    float: left;
+    width: 50%;
+}
+
+#breaktime {
+    text-align: center;
+    float: right;
+    width: 50%;
+}
+
+#start {
+    float: left;
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+    margin-left: 10%;
+    margin-top: 10%;
+}
+
+#start:hover,
+#session-:hover,
+#break-:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#reset {
+    float: right;
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+    margin-right: 10%;
+    margin-top: 10%;
+}
+
+#reset:hover,
+#sessionplus:hover,
+#breakplus:hover {
+    background-color: #008CBA;
+    color: white;
+}
