@@ -25,11 +25,7 @@ app.get("/getdata", function(req, res) {
     })
 })
 
-app.get("/gettodo", function(req, res) {
-    readFile("./data.txt", function(err, data) {
-        res.end(data);
-    })
-})
+
 
 app.get("/", (req, res) => {
     readFile("./static/todoapphtml.html", function(err, data) {
