@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<title>test</title>
+
+<body>
+    <%- include("header",{username:name})  %>
+        its home buddy
+        <h1>
+            Welcome
+            <%=name %>
+        </h1>
+        <% if(name==='Arun') {%>
+            <h1>Welcome Arun</h1>
+            <% }else {%>
+                <h1>Forbidden access</h1>
+                <% } %>
+                    <h4>fav books of
+                        <%=name%>
+                    </h4>
+                    <ul>
+                        <% books.forEach((book)=>{ %>
+                            <li>
+                                <%=book  %>
+                            </li>
+                            <% }) %>
+                    </ul>
+                    <%- include("footer")  %>
+</body>
+
+</html>
