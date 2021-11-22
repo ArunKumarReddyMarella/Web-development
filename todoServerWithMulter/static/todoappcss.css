@@ -1,0 +1,47 @@
+#leftpane {
+    margin: 0 auto;
+    float: left;
+    background: lightblue;
+    width: 60%;
+}
+
+#Rightpane {
+    float: right;
+    width: 40%;
+    margin: 0 auto;
+    background: wheat;
+}
+
+#textArea {
+    border: none;
+    background-color: wheat;
+    width: 100%;
+    height: 50px;
+    font-size: 40px;
+}
+
+p {
+    font-size: 50%;
+    padding: 5px;
+    padding-top: 0px;
+    padding-left: 2%;
+}
+
+.tasklistheading {
+    padding: 0px;
+    margin: 0px;
+    padding-top: 2%;
+    padding-left: 2%;
+}
+
+body {
+    display: flex;
+}
+
+#newTask {
+    width: 90%;
+    border: 1px solid rgb(22, 1, 1);
+    font-size: large;
+    padding: 3px;
+    margin: 5px;
+}
