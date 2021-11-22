@@ -71,13 +71,13 @@ app.post('/register', function(req, res) {
 
     const { username, password } = req.body;
 
-    fs.readFile('./data.txt', function(err, users) {
+    fs.readFile('./data.txt', function(err, data) {
         if (err) {
             res.send("User already exists");
             console.log('error is data file');
             return;
         }
-        users = JSON.parse(users);
+        users = JSON.parse(data);
 
         for (let i = 0; i < users.length; i++) {
             let user = users[i];
