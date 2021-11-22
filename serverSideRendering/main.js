@@ -87,6 +87,7 @@ app.post('/register', function(req, res) {
             let user = users[i];
             if (user.username == username && user.password == password) {
                 res.end("user already exist");
+                return;
             }
         }
         users.push(req.body);
