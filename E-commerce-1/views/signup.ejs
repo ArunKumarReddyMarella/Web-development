@@ -1,0 +1,15 @@
+<html>
+<form method="post" action="signup">
+    <input required placeholder="name" name="name" />
+    <input required placeholder="username" name="username" />
+    <input required placeholder="password" name="password" />
+    <input required placeholder="mobile" name="mobile" />
+    <input type="submit" value="signup" />
+</form>
+<% if(error){ %>
+    <div style="background: red;padding: 10px">
+        <%=error %>
+    </div>
+    <% } %>
+
+</html>

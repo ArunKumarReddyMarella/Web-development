@@ -1,0 +1,20 @@
+div {
+    border: 1px solid red;
+    padding: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form>* {
+    margin: 20px;
+}
+
+input {
+    border: none;
+    background-color: wheat;
+    color: red;
+    width: 200px;
+}
