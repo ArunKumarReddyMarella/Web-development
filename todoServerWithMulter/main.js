@@ -11,14 +11,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("static"));
 app.use(express.static("uploads"))
 
-app.use(function(req, res, next) {
+/*app.use(function(req, res, next) {
     console.log(req.url);
     next();
+})*/
+
+app.get("/savephoto", upload.single("taskphoto"), function(req, res) {
+    console.log("a");
+    res.end(req.file.filename);
 })
 
 app.post("/save", function(req, res) {
     let data = JSON.stringify(req.body)
-    console.log("savejs  " + data);
+    console.log("savejs  " + req.taskName);
     fs.writeFile('./data.txt', data, (err) => {
         res.end(data);
     })

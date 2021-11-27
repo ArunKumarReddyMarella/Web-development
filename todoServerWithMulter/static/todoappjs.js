@@ -7,6 +7,7 @@ var data = []
 
 
 var dataServerRequest = function() {
+    console.log("a");
     let request = new XMLHttpRequest();
     request.open("GET", "/getdata");
     request.setRequestHeader("Content-Type", "application/json");
@@ -14,35 +15,46 @@ var dataServerRequest = function() {
     request.addEventListener('load', function() {
         data = JSON.parse(request.responseText);
         data.forEach(item => {
-            addtask(item.taskName, item.isChecked);
+            addtask(item.taskName, item.isChecked, item.url);
         })
     })
-
 }
 
 dataServerRequest();
 
 addNewTask.addEventListener("click", function() {
+    console.log("c");
     if (text.value === "") {
         alert("Enter the task");
     } else {
-        addtask(text.value, false);
-        data.push({
-            taskName: text.value,
-            isChecked: false
-        });
+        console.log("b");
+        let req = new XMLHttpRequest();
+        req.open('GET', '/savephoto');
+        req.addEventListener('load', () => {
+            let url = JSON.parse(req.responseText);
+            console.log(JSON.parse(req.responseText))
+            addtask(text.value, false, url);
+            data.push({
+                taskName: text.value,
+                isChecked: false,
+                url: url
+            });
 
-        let data_string = JSON.stringify(data);
-        saveTOServer(data_string);
-        text.value = "";
+            let data_string = JSON.stringify(data);
+            saveTOServer(data_string);
+            text.value = "";
+        })
     }
 });
 
-function addtask(name, ischecked) {
+function addtask(name, ischecked, url) {
+    console.log("b");
     var task = document.createElement("div");
     task.setAttribute("id", "newTask");
     var taskname = document.createElement("p");
     taskname.innerHTML = name;
+    var image = document.createElement("img");
+    image.src = url;
     var xsymbol = document.createElement("span");
     xsymbol.innerHTML = "X";
     xsymbol.addEventListener("click", function() {
@@ -85,6 +97,7 @@ function addtask(name, ischecked) {
         taskname.innerHTML = newTaskName;
     });
     task.appendChild(taskname);
+    task.appendChild(image);
     task.appendChild(xsymbol);
     task.appendChild(checkbox);
     task.appendChild(edit);
