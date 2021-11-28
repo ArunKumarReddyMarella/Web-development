@@ -22,28 +22,31 @@ var dataServerRequest = function() {
 
 dataServerRequest();
 
-addNewTask.addEventListener("click", function() {
+addNewTask.addEventListener("submit", function(event) {
+    event.preventDefault();
     console.log("c");
     if (text.value === "") {
-        alert("Enter the task");
+        alert("Enter the task name");
     } else {
-        console.log("b");
-        let req = new XMLHttpRequest();
-        req.open('GET', '/savephoto');
-        req.addEventListener('load', () => {
-            let url = JSON.parse(req.responseText);
-            console.log(JSON.parse(req.responseText))
-            addtask(text.value, false, url);
-            data.push({
-                taskName: text.value,
-                isChecked: false,
-                url: url
-            });
+        setInterval(function() {
+            console.log("b");
+            let req = new XMLHttpRequest();
+            req.open('GET', '/savephoto');
+            req.addEventListener('load', () => {
+                let path = JSON.parse(req.responseText);
+                console.log(JSON.parse(req.responseText))
+                addtask(text.value, false, path);
+                data.push({
+                    taskName: text.value,
+                    isChecked: false,
+                    url: path
+                });
 
-            let data_string = JSON.stringify(data);
-            saveTOServer(data_string);
-            text.value = "";
-        })
+                let data_string = JSON.stringify(data);
+                saveTOServer(data_string);
+                text.value = "";
+            })
+        }, 2000);
     }
 });
 
