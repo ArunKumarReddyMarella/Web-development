@@ -3,11 +3,21 @@ const session = require('express-session')
 const app = express()
 const port = 3000
 
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+}))
+
 const readFile = require("./utils/readFile");
 const writeFile = require("./utils/writeFile");
 
 const getUsers = require("./methods/getUsers");
 const saveUser = require("./methods/saveUser");
+
+const getProducts = require("./methods/getProducts");
+
+const checkAuth = require("./middleware/checkAuth");
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }))
@@ -18,31 +28,33 @@ app.set("view engine", "ejs")
 
 app.get('/', (req, res) => res.render('home'))
 
-app.get('/login', (req, res) => res.render('login'))
-
-app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-    getUsers((err, users) => {
-        if (err) {
-            callback("something went wrong");
-            return;
-        }
-
-        for (let i = 0; i < users.length; i++) {
-            let user = users[i]
-
-            if (user.username == username && user.password == password) {
-                res.render("landingPage");
+app.route("/login").get((req, res) => res.render('login', { error: '' }))
+    .post((req, res) => {
+        const { username, password } = req.body;
+        getUsers((err, users) => {
+            if (err) {
+                res.render("login", { error: "user not found" })
                 return;
             }
-            if (user.username == username && user.password != password) {
-                res.send("Wrong Password");
-                return;
+
+            for (let i = 0; i < users.length; i++) {
+                let user = users[i]
+
+                if (user.username == username && user.password == password) {
+                    req.session.is_logged_in = true;
+                    req.session.user = user;
+                    //res.render("landingPage", { user: req.session.user })
+                    res.redirect("/home");
+                    return;
+                }
+                if (user.username == username && user.password != password) {
+                    res.render("login", { error: "wrong password" })
+                    return;
+                }
+                res.render("login", { error: "user not found" })
             }
-            res.send("user Not Found");
-        }
+        })
     })
-})
 
 
 app.route("/signup").post((req, res) => {
@@ -62,15 +74,27 @@ app.route("/signup").post((req, res) => {
         if (err) {
             res.render("signup", { error: err });
         } else {
-            res.render("landingPage");
+            req.session.is_logged_in = true;
+            req.session.user = user;
+            //res.render("landingPage", { user: req.session.user })
+            res.redirect("/home");
         }
     })
 }).get((req, res) => {
     res.render("signup", { error: false });
 })
 
-app.get("/home", (req, res) => {
-    res.render("landingPage")
+app.get("/home", checkAuth, (req, res) => {
+    getProducts((products) => {
+
+        res.render("landingPage", { products })
+    })
+})
+
+app.get("/logout", (req, res) => {
+    req.session.destroy()
+
+    res.render("home");
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

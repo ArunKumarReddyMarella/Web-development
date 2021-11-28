@@ -1,1 +1,14 @@
-<h1>success landing page</h1>
+<h1 style="border: 50px;">success landing page</h1>
+<h1>Welcome to SS8</h1>
+<% if(products.length===0) {%>
+    <h1>Empty</h1>
+    <% } %>
+
+        <% products.forEach((product)=>{ %>
+            <div>
+                <img src="<%=product.image %> " style="width: 100px; height: 100px;" />
+                <p>
+                    <%=product.name %>
+                </p>
+            </div>
+            <% }) %>

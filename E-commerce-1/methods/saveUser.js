@@ -1,6 +1,6 @@
-const readFile = require("../utils/writeFile");
+const readFile = require("../utils/readFile");
 const getUsers = require("./getUsers");
-const writeFile = require("write-file-atomic");
+const writeFile = require("../utils/writeFile");
 module.exports = function(newUser, callback) {
     getUsers((err, users) => {
         if (err) {
