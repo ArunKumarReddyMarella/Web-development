@@ -1,1 +1,1 @@
-[{"username":"Arun","name":"Arun Reddy","mobile":"9515753581","password":"reddy"}]
+[{"username":"Arun","email":"arunkumarreddy159@gmail.com","name":"Arunkumarreddy Marella","mobile":"+919515753581","password":"reddy","isVerified":false}]

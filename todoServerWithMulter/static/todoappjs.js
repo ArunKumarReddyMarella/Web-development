@@ -28,7 +28,7 @@ addNewTask.addEventListener("submit", function(event) {
     if (text.value === "") {
         alert("Enter the task name");
     } else {
-        setInterval(function() {
+        setTimeout(function() {
             console.log("b");
             let req = new XMLHttpRequest();
             req.open('GET', '/savephoto');
@@ -46,7 +46,7 @@ addNewTask.addEventListener("submit", function(event) {
                 saveTOServer(data_string);
                 text.value = "";
             })
-        }, 2000);
+        }, 5000);
     }
 });
 

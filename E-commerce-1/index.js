@@ -9,6 +9,8 @@ app.use(session({
     saveUninitialized: true,
 }))
 
+const sendEmail = require("./methods/sendEmail");
+
 const readFile = require("./utils/readFile");
 const writeFile = require("./utils/writeFile");
 
@@ -58,16 +60,18 @@ app.route("/login").get((req, res) => res.render('login', { error: '' }))
 
 
 app.route("/signup").post((req, res) => {
-    const { username, password, name, mobile } = req.body;
+    const { username, password, email, name, mobile } = req.body;
     if (!username || !name || !password || !mobile) {
         res.render("signup", { error: "something forgot" });
         return;
     }
     let user = {
         username,
+        email,
         name,
         mobile,
-        password
+        password,
+        isVerified: false
     };
 
     saveUser(user, function(err) {
@@ -77,7 +81,12 @@ app.route("/signup").post((req, res) => {
             req.session.is_logged_in = true;
             req.session.user = user;
             //res.render("landingPage", { user: req.session.user })
-            res.redirect("/home");
+
+            sendEmail(function(err, data) {
+                console.log(err, data);
+                res.redirect("/home");
+            })
+
         }
     })
 }).get((req, res) => {
@@ -85,9 +94,11 @@ app.route("/signup").post((req, res) => {
 })
 
 app.get("/home", checkAuth, (req, res) => {
-    getProducts((products) => {
 
-        res.render("landingPage", { products })
+    const { page_no } = parseInt(req.query);
+
+    getProducts(page_no, (products) => {
+        res.render("landingPage", { products, page_no: page_no + 1 })
     })
 })
 
